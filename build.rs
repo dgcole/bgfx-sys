@@ -3,10 +3,13 @@ fn main() {
     let env = std::env::var("TARGET").unwrap();
 
     // windows includes
-    if env.contains("windows") {
+    if env.contains("windows-msvc") {
         build.include("bx/include/compat/msvc");
         build.include("bgfx/3rdparty/directx-headers/include/directx");
         build.flag("/Zc:__cplusplus");
+    } else if env.contains("windows-gnu") {
+        build.include("bx/include/compat/mingw");
+        build.include("bgfx/3rdparty/directx-headers/include/directx");
     } else if env.contains("darwin") {
         // macOS includes
         build.include("bx/include/compat/osx");
